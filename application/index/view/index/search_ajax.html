@@ -1,0 +1,10 @@
+{volist name='order' id='vo'}
+<div class="item">
+<div class="flexbox">
+<div class="time flex">
+<span>訂單時間</span>
+<div class="deviate">{$vo.add_time}</div>
+</div><div class="number flex"><span>訂單編號</span><div class="deviate">{$vo.order_sn}</div></div>
+</div><button rel="63290" orderno="{$vo.order_sn}" onclick="window.location='/index/index/findOrder/id/{$vo.order_id}'" class="order_details">查看訂單詳情</button>
+</div>
+{/volist}

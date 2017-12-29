@@ -1,0 +1,109 @@
+
+                    <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" style="font-size:12px;">
+                                <thead>
+                                <tr>
+                                    <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+                                    <td class="text-center">
+                                        <a href="javascript:sort('order_sn');">订单编号</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="javascript:sort('consignee');">收货人</a>
+                                    </td>
+                                    <td class="text-center">
+                                        电话
+                                    </td>
+                                    <td class="text-center">
+                                        地址
+                                    </td>
+                                    <td class="text-center">
+                                        颜色
+                                    </td>
+                                    <td class="text-center">
+                                        尺寸
+                                    </td>
+                                    <td class="text-center">
+                                        赠品颜色
+                                    </td>
+                                    <td class="text-center">
+                                        赠品尺寸
+                                    </td>
+                                    <td class="text-center">
+                                        数量
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="">总金额</a>
+                                    </td>
+                                    <td class="text-center">
+                                        留言
+                                    </td> 
+                                    <td class="text-center">
+                                        <a href="javascript:sort('order_status');">订单状态</a>
+                                    </td>
+                                    <td class="text-center">发货状态</td>
+                                    <td class="text-center">
+                                        <a href="javascript:sort('add_time');">下单时间</a>
+                                    </td>
+                                    <td class="text-center">网站</td>
+                                    <td class="text-center">sku</td>
+                                    <td class="text-center">供应商</td>
+                                    <td class="text-center">操作</td>
+                                </tr>
+                                
+                                </thead>
+                                <tbody>
+                                <style type="text/css">
+                                    tr td{
+                                        min-width: 70px;
+                                    }
+                                </style>
+                                {volist name="order_list" id="list"}
+                                    <tr>
+                                        <td class="text-center">
+                                        	<input type="checkbox" name="selected[]" value="6">
+                                        	<input type="hidden" name="shipping_code[]" value="flat.flat">
+                                        </td>
+                                        <td class="text-center">{$list.order_sn}</td>
+                                        <td class="text-center">{$list.user}</td>
+                                        <td class="text-center">{$list.mobile}</td>
+                                        <td class="text-center">{$list.area} {$list.city} {$list.address}</td>
+                                        <td class="text-center">{$list.color}</td>
+                                        <td class="text-center">{$list.good_size}</td>
+                                        <td class="text-center">{$list.gift_color}</td>
+                                        <td class="text-center">{$list.gift_size}</td>
+                                        <td class="text-center">{$list.good_num}</td>
+                                        <td class="text-center">{$list.total_price}</td>
+                                        <td class="text-center">{$list.user_note}</td>
+                                        <td class="text-center">货到付款</span></if></td>
+                                        <td class="text-center">{$list.shipping_status?'已发货':'未发货'}</td>
+                                        <td class="text-center">{$list.add_time|date='Y-m-d H:i',###}</td>
+                                        <td>{$list.c_web}</td>
+                                        <td>{$list.sku}</td>
+                                        <td>{$list.supplier}</td>
+                                        <td class="text-center">
+                                                 <a href="{:U('Admin/order/detail',array('id'=>$list['order_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>
+                                                 <!--
+                                                 <if condition="($list['order_status'] eq 3) or ($list['order_status'] eq 5)">
+                                                        <a href="{:U('Admin/order/delete_order',array('order_id'=>$list['order_id']))}"  data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a>
+                                        	<else/>
+                                        		<a href="javascript:void(0)" onclick="alert('该订单不得删除')" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="删除"><i class="fa fa-trash-o"></i></a>
+                                        	</if>
+                                                 -->
+                                        </td>
+                                    </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-sm-6 text-left"></div>
+                        <div class="col-sm-6 text-right">{ $page}</div>
+                    </div>
+<script>
+    $(".pagination  a").click(function(){
+        var page = $(this).data('p');
+        ajax_get_table('search-form2',page);
+    });
+</script>

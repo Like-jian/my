@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="320" name="MobileOptimized">
+    <meta content="telephone=no" name="format-detection">
+    <title>{$good.name}</title>
+    <script async="" src="__PUBLIC__/newfiles/demo4/analytics.js"></script>
+    <script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script>
+    <script src="__PUBLIC__/newfiles/demo4/cjs.js"></script>
+    <script src="__PUBLIC__/newfiles/demo4/jquery-2.2.3.min.js"></script>
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function() {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        } (window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '143464762948647');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" src="https://www.facebook.com/tr?id=143464762948647&ev=PageView&noscript=1" />
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+</head>
+<body>
+    <!-- resource -->
+    <link href="__PUBLIC__/newfiles/demo7/styles.css" rel="stylesheet">
+    <link href="__PUBLIC__/newfiles/demo7/singleActive.css" rel="stylesheet">
+    <link href="__PUBLIC__/newfiles/demo7/swiper-3.4.0.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/template/demo/style7.css" rel="stylesheet" type="text/css" />
+    <!--  -->
+    <div class="mod_bar" id="header_normal"><div class="mod_bar_tit">{$good.name}</div></div>
+    <div class="swiper-container swiper-container-horizontal swiper-container-autoheight">
+        <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+            <div class="swiper-slide swiper-slide-active" style="width: 640px;"><img width="100%" src="{$good.img}"></div>
+        </div>
+        <div class="swiper-pagination swiper-pagination-custom"><span class="redicon"></span></div>
+    </div>
+    <!--<div style="display: flex;align-items: center; background:#000000; padding:10px 0px; position:relative;">
+        <span class="timeBuy"><img src="newfiles/demo5/timer.png" /></span>
+        <span class="timeBuy">限时抢购</span>
+        <span class="timeWrap">
+            距離結束
+            <span id="timer"><span id="h">07</span><span class="">時</span><span id="m">39</span><span class="">分</span><span id="s">33</span><span class="">秒</span></span>
+        </span>
+
+    </div>-->
+    <div class="inforContent">
+        <div class="i-p-top">
+            <div class="i-p-b">
+                <span class="top_price" style="display: inline-block;">NT${$good.price}</span><span class="oprice"> 原價：</span><b style="text-decoration:line-through;">NT${$good['discount']!=0?$good['price']/$good['discount']:$good['price']}</b>
+            </div>
+            <!--<div class="snapped">
+                <span>已搶購6924件</span> <div class="percentBar"><div class="progress"></div></div> 95%
+            </div>-->
+            
+            <div id="here"></div>
+            <div class="BuyTips">
+                <span class="Buyed">已搶購9624件</span>
+                <span class="Buyclock"><img src="http://angeand.com/newfiles/demo7/clock.png" /></span>
+                <span class="timeWrap">
+                    距結束
+                    <span id="timer"><span id="h">07</span><span class="">時</span><span id="m">39</span><span class="">分</span><span id="s">33</span><span class="">秒</span></span>
+                </span>
+            </div>
+            <div class="ser_promise">
+                <span>【爆款特卖】</span>
+                <span>【官方正品】</span>
+                <span>【貨到付款】</span>
+            </div>
+
+        </div>
+        <div class="detail_info_wrap">
+            <div class="detail_list" id="detailCont">
+                <div class="detail_item p_desc" id="detail_tab1" style="padding:4px 4px;">
+                    <div id="commDesc" class="detail_pc">
+                        <!-- 后台商品介绍 开始-->
+                        <div class="detail_con">
+                        {$good.content}
+
+                            <div></div>
+                        </div>
+
+                    </div>
+                    <div class="pinlun_content" id="pinlun_content">
+                    </div>
+                </div>
+
+                <div class="fixednav">
+                    <ul class="nav-list">
+                        <li>
+                            <a href="/index/index/findOrder" class="inquiry"><span>查詢訂單</span></a>
+                        </li>
+                        <li id="btn_buy">
+                            <a href="/index/index/order/id/{$good.id}" class="conbtn">
+                                <span>立即下標</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/newfiles/demo4/swiper-3.4.0.jquery.min.js"></script>
+    <script type="text/javascript" language="javascript" src="__PUBLIC__/newfiles/demo4/index.js" charset="utf-8"></script>
+    <script>
+        if ($(".detail_con video").length > 0) {
+            $(".detail_con video").attr("poster", "/public/image/videoPlay.jpg");
+            $(".detail_con video").click(function () {
+                $(this).get(0).play();
+            });
+        }
+        $("#btn_buy").click(function () {
+        window.location.href="/index/index/order/id/{$good.id}";
+    })
+    </script>
+</body>
+</html>

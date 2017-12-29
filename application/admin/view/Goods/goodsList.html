@@ -1,0 +1,325 @@
+{include file="Public/min-header"/}
+<div class="wrapper">
+<script type="text/javascript" src="__ROOT__/Public/plugins/daterangepicker/daterangepicker.js"></script>
+ <!-- { include file="Public/breadcrumb"/} -->
+ <style>#search-form > .form-group{margin-left: 10px;}</style>
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-list"></i> 商品列表</h3>
+        </div>
+        <div class="panel-body">
+          <div class="navbar navbar-default">
+              <form action="/admin/goods/search" id="search-form2" class="navbar-form form-inline" method="post" >
+                <div class="form-group">
+                  <select name="tmp" id="cat_id" class="form-control">
+                    <option value="">销售模式</option>
+                    <foreach name="categoryList" item="v" key="k" >
+                        <option value=""> </option>
+			 		</foreach>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <select name="c_web" id="brand_id" class="form-control">
+                    <option value="">网站</option>
+                        <foreach name="brandList" item="v" key="k" >
+                           <option value=""></option>
+			             </foreach>
+                  </select>
+                </div>
+
+                                       
+                <div class="form-group">
+                  <label class="control-label" for="input-order-id">关键词</label>
+                  <div class="input-group">
+                    <input type="text" name="key_word" value="" placeholder="搜索词" id="input-order-id" class="form-control">
+                  </div>
+                </div>  
+                <div class="form-group">
+                    <label class="control-label" for="input-date-added">下单日期</label>
+                    <div class="input-group">
+                        <input type="text" name="start_time" value="{:date('Y-m-d')}" placeholder="下单日期"  id="add_time" class="input-sm"><input type="text" name="end_time" value="{:date('Y-m-d')}" placeholder="下单日期"  id="add_time" class="input-sm">
+                     </div>
+                </div> 
+
+                <!--排序规则-->
+                <input type="hidden" name="orderby1" value="id" />
+                <input type="hidden" name="orderby2" value="desc" />
+                <button type="submit"  id="button-filter search-order" class="btn btn-primary"><i class="fa fa-search"></i> 筛选</button>
+              </form>
+          </div>
+          <div id="ajax_return"> 
+                <form method="post" enctype="multipart/form-data" target="_blank" id="goods_list_form">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <td style="width: 1px;" class="text-center">                
+                                    
+                                </td>                
+                                <td class="text-right">
+                                    <a href="javascript:sort('goods_id');">ID</a>
+                                </td>
+                                <td class="text-left">
+                                    <a href="javascript:sort('goods_name');">商品名称</a>
+                                </td>
+                                <td class="text-left">
+                                    <a href="javascript:sort('goods_sn');">货号</a>
+                                </td>                                
+                                <!-- <td class="text-left">
+                                    <a href="javascript:sort('cat_id');">分类</a>
+                                </td>  -->               
+                                <td class="text-left">
+                                    <a href="javascript:sort('shop_price');">价格</a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="javascript:sort('is_on_sale');">折扣</a>
+                                </td>
+
+                                <td class="text-left">
+                                    <a href="javascript:void(0);">网站</a>
+                                </td>                
+                                <td class="text-center">
+                                    <a href="javascript:sort('sort');">销售模式</a>
+                                </td>     
+                                <td class="text-center">
+                                    <a href="javascript:sort('is_recommend');">facebook像素</a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="javascript:sort('is_new');">添加日期</a>
+                                </td>   
+                                <!-- <td class="text-center">
+                                    <a href="javascript:sort('is_hot');">热卖</a>
+                                </td> -->                
+                                <!-- <td class="text-left">
+                                    <a href="javascript:void(0);">库存</a>
+                                </td> -->
+                                <!-- <td class="text-left">
+                                    <a href="javascript:sort('is_on_sale');">上/下架</a>
+                                </td> -->
+                                <!-- <td class="text-left">
+                                    <a href="javascript:sort('goods_state');">审核状态</a>
+                                </td>  -->             
+                                <td class="text-right">操作</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="goodsList" id="list"}
+                                <tr>
+                                    <td class="text-center">
+                                       <input type="checkbox" name="goods_id[]" value="{ $list.goods_id}"/>
+                                    </td>
+                                    <td class="text-right">{$list.id}</td>
+                                    <td class="text-left">{$list.name}</td>
+                                    <td class="text-left">{$list.sku}</td>
+                                    <td class="text-left">{$list.price}</td>
+                                    <td class="text-left">{$list.discount}</td>
+                                    <td class="text-left">{$list.c_web}</td>
+                                    <td class="text-left">{$list.tmp}</td>
+                                    <td class="text-left">{$list.px}</td>
+                                    <td class="text-left">{:date('Y-m-d ',$list.addtime)}</td>
+                                    <!--  -->
+                                    <td class="text-right">
+                                        <a href="{:U('Goods/addEditGoods',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
+                                        <a href="javascript:void(0);" onclick="del('{$list.id}',$(this))" id="button-delete6" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a>
+                                       
+                                    </td>   
+                                </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="navbar-form form-inline">
+                        全选
+                        <input type="checkbox" onclick="$('input[name=\'goods_id\[\]\']').prop('checked', this.checked);">
+                        <!-- <div class="form-group">
+                            <select id="func_id" class="form-control" style="width: 120px;" onchange="fuc_change(this);">
+                                <option value="-1">请选择...</option>
+                                <option value="0">推荐</option>
+                                <option value="1">新品</option>
+                                <option value="2">热卖</option>
+                                <option value="3">审核商品</option>
+                            </select>
+                        </div> -->
+                        <div class="form-group" id="state_div" >
+                            <select id="state_id" class="form-control" style="display: none" onchange="state_change(this);">
+                                <option value="">请选择...</option>
+                                <foreach name="goods_state" item="vo" >
+                                    <option value="{ $key}">{ $goods_state[$key]}</option>
+                                </foreach>
+                            </select>
+                        </div>
+                        <button id="act_button" type="button" onclick="act_submit();" class="btn btn-primary disabled"><i class="fa"></i> 确定</button>
+                    </div>
+                    <div class="col-sm-9 text-right">{$page}</div>
+                </div>
+                <script>
+                    // 点击分页触发的事件
+                    $(".pagination  a").click(function(){
+                        cur_page = $(this).data('p');
+                        ajax_get_table('search-form2',cur_page);
+                    });
+                </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row --> 
+  </section>
+  <!-- /.content --> 
+</div>
+<!-- /.content-wrapper -->
+<script>
+    $(document).ready(function () {
+        // ajax 加载商品列表
+        //ajax_get_table('search-form2', 1);
+       
+
+    });
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form, page) {
+        cur_page = page; //当前页面 保存为全局变量
+        $.ajax({
+            type: "POST",
+            url: "/admin/goods/ajaxGoodsList/" ,//+tab,
+            data: $('#' + form).serialize(),// 你的formid
+            success: function (data) {
+                $("#ajax_return").html('');
+                $("#ajax_return").append(data);
+            }
+        });
+    }
+
+    // 点击排序
+    function sort(field) {
+        $("input[name='orderby1']").val(field);
+        var v = $("input[name='orderby2']").val() == 'desc' ? 'asc' : 'desc';
+        $("input[name='orderby2']").val(v);
+        ajax_get_table('search-form2', cur_page);
+    }
+
+    // 删除操作
+    function del(id,obj) {
+        if (!confirm('确定要删除吗?'))
+            return false;
+        $.ajax({
+            url: "/admin/goods/del/id/" + id,
+            success: function (v) {
+                
+                if (v.code=='1'){
+                    obj.parent().parent().remove();
+                    layer.msg(v.msg, {icon: 1, time: 1000});
+                }
+                else
+                    layer.msg(v.msg, {icon: 2, time: 1000}); //alert(v.msg);
+            }
+        });
+        return false;
+    }
+
+    //获取选中商品id
+    function get_select_goods_id_str() {
+        if ($('input[name="goods_id\[\]"]:checked').length == 0)
+            return false;
+        var goods_arr = Array();
+        $('input[name="goods_id\[\]"]:checked').each(function () {
+            goods_arr.push($(this).val());
+        });
+        var goods_id_str = goods_arr.join(',');
+        return goods_id_str
+    }
+
+    act = '';//操作变量
+    //批量操作
+    function fuc_change(obj) {
+        var fuc_val = $(obj).children('option:selected').val();
+        if (fuc_val == 0) {
+            //推荐
+            act = 'recommend';
+            $('#act_button').removeClass('disabled');
+            reset_state();
+        } else if (fuc_val == 1) {
+            act = 'new';
+            $('#act_button').removeClass('disabled');
+            reset_state();
+            //新品
+        } else if (fuc_val == 2) {
+            act = 'hot';
+            $('#act_button').removeClass('disabled');
+            reset_state();
+            //热卖
+        } else if (fuc_val == 3) {
+            act = 'examine';
+            $('#state_id').show();
+            $('#act_button').addClass('disabled');
+            $("#state_id option:first").prop("selected", 'selected');
+            //审核商品
+        } else {
+            act = '';
+            $('#act_button').addClass('disabled');
+            reset_state();
+            //恢复默认
+        }
+    }
+
+    //重置审核操作
+    function reset_state() {
+        $("#state_id option:first").prop("selected", 'selected');
+        $('#state_id').hide();
+    }
+
+    //审核操作
+    function state_change(obj) {
+        var state_val = $(obj).children('option:selected').val();
+        if (state_val == '') {
+            $('#act_button').addClass('disabled');
+        } else {
+            $('#act_button').removeClass('disabled');
+        }
+    }
+
+    //批量操作提交
+    function act_submit() {
+        //prompt层
+        var ids = get_select_goods_id_str();
+        if (ids == false) {
+            layer.alert('请勾选要操作的商品', {icon: 2});
+            return;
+        }
+        var text = prompt('请输入操作备注', '填写操作备注,可不填');
+        var goods_state = $('#state_id').children('option:selected').val();
+        if (text != null && text != "") {
+            $.ajax({
+                type: "POST",
+                url: "/index.php?m=Admin&c=goods&a=act",//+tab,
+                data: {act: act,goods_state:goods_state,goods_ids: ids, reason: text},
+                dataType: 'json',
+                success: function (data) {
+                    if(data.status == 1){
+                        layer.alert(data.msg, {
+                            icon: 1,
+                            closeBtn: 0
+                        }, function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.alert(data.msg, {icon: 2,time: 3000});
+                    }
+
+                },
+                error:function(){
+                    layer.alert('网络异常', {icon: 2,time: 3000});
+                }
+            });
+        }
+    }
+
+
+</script>
+</body>
+</html>

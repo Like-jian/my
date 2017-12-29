@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0">
+    <title>2017新品冬季羽絨棉襖</title>
+    <script src="__PUBLIC__/newfiles/jquery.js" language="javascript" type="text/javascript"></script>
+    <link href="__PUBLIC__/newfiles/demo6/style.css" type="text/css" rel="stylesheet">
+    <link href="__PUBLIC__/newfiles/demo6/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="__PUBLIC__/template/demo/style6.css" rel="stylesheet" type="text/css" />
+    <script language="javascript" src="__PUBLIC__/Member/inc/jquery.js"></script>
+    <script language="javascript" src="__PUBLIC__/Member/inc/jquery-ui.js"></script>
+    <script language="javascript" src="__PUBLIC__/Member/inc/jquery.form.js"></script>
+    <script language="javascript" src="__PUBLIC__/Member/inc/forwork.js"></script>
+    <script language="javascript" src="__PUBLIC__/Member/inc/jquery-easyui/jquery.easyui.min.js"></script>
+    <script language="javascript" src="__PUBLIC__/layer/layer/layer.js"></script>
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '143464762948647');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" src="https://www.facebook.com/tr?id=143464762948647&ev=PageView&noscript=1" />
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+    <script type="text/javascript">
+        $(function () {
+            var ptothumb = $('.tab-sel').find("img").attr("src");
+            $("#prothumb").val(ptothumb);
+            var prosethumb = $('.tab-gsel').find("img").attr("src");
+            $("#prosethumb").val(prosethumb);
+            var c = $("input[name=chanpin1]");
+            $("input[name=chanpin1]").click(function () {
+                ptothumb = $(this).parent().find("img").attr("src");
+                $("#prothumb").val(ptothumb);
+            });
+            $("input[name=fcolor]").click(function () {
+                ptothumb = $(this).parent().find("img").attr("src");
+                $("#prosethumb").val(ptothumb);
+            });
+        })
+    </script>
+</head>
+<body>
+    <div id="order">
+        <div class="warp">
+            <form id="form" name="form" action="/index/index/submitOrder/id/{$info.id}" method="post">
+                <input type="hidden" name="orderid" id="orderid" value="">
+                <input type="hidden" name="token" value="EDA843DD46DD8DB3F08B">
+                <input type="hidden" id="prothumb" name="prothumb" value="">
+                <input type="hidden" id="prosethumb" name="prosethumb" value="">
+                <div class="nav-header">
+                    <div class="header-left"><a href="/"><img src="__ROOT__/public/image/leftwhite.png" /></a> </div>
+                    <h2>產品信息</h2>
+                </div>
+                <div class="bdbox">
+                    <label class="bdxx"><em>*</em>產品</label>
+                    <div class="dxbox red">
+                        <label>
+                            <input type="radio" id="pri" name="product" value="{$info.name}" alt="2199" onclick="pricea()" checked="">
+                            {$info.name}
+                        </label><br>
+                        <input type="text" name="per_price" value="2199" hidden="">
+                    </div>
+                </div>
+                <!--附加属性b-->
+                <div class="bdbox">
+                    <label class="bdxx"><em>*</em>選顏色</label>
+                    <div class="dxbox red">
+                        {volist name="color" id="vo"}
+                            <label class="tab-sel" style = "width:30%;display:inline-block;border:1px solid #ccc;padding:5px;margin-top:10px;" >
+                                <img src = "{$vo.img}" class="product-attr-img">
+                                <input type = "radio" name="chanpin1" value="{$vo.color}" {eq name="i" value="1"}checked="checked"{/eq}>{$vo.color}
+                            </label>
+                        {/volist}
+                    </div>
+                </div>
+                <div class="bdbox">
+                    <label class="bdxx"><em>*</em>選尺碼</label>
+                    <div class="dxbox red">
+                        {volist name="size" id='vo'}
+                            <label style ="width:23%;display:inline-block;border:1px solid #ccc;padding:5px;margin-top:10px;margin-left:1%;" >  <input type="radio" name = "size" {eq name="i" value="1"}checked="checked"{/eq} value = "{$vo}" >{$vo}
+                            </label >
+                        {/volist}
+                    </div>
+                </div>
+                <div class="bdbox">
+                    <label class="bdxx"><em>*</em>選贈品顏色</label>
+                    <div class="dxbox red">
+                    {volist name="gift_color" id='vo'}
+                        <label class="tab-gsel" style = "width:30%;display:inline-block;border:1px solid #ccc;padding:5px;margin-top:10px;" >
+                            <img src = "{$vo.img}" class="product-attr-img">
+                            <input type = "radio" name="fcolor" value="{$vo.color}" {eq name="i" value="1"}checked="checked"{/eq}>{$vo.color}
+                        </label>
+                    {/volist}
+                    </div>
+                </div>
+                <div class="bdbox">
+                    <label class="bdxx"><em>*</em>選贈品尺碼</label>
+                    <div class="dxbox red">
+                    {volist name="gift_size" id='vo'}
+                        <label style ="width:23%;display:inline-block;border:1px solid #ccc;padding:5px;margin-top:10px;margin-left:1%;" >  <input type="radio" name = "fsize" {eq name="i" value="1"}checked="checked"{/eq} value = "{$vo}" >{$vo}
+                        </label >
+                    {/volist}
+                    </div>
+                </div>
+                <!--附加属性e-->
+                <div class="bdbox">
+                    <label class="bdxx"><em>*</em>數量</label>
+                    <div class="input-group " style="width: 110px;margin: 5px 0px;">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default inc-btn" type="button" onclick="minnumber()">-</button>
+                        </span>
+                        <input type="text" class="text numbertext form-control" readonly="" value="1" name="mun" id="mun" onblur="inputnumber();" style="text-align: center">
+                        <!-- input type="number" min="1" id="mall_number" class="form-control" value="1" style="text-align: center"> -->
+                        <span class="input-group-btn">
+                            <button class="btn btn-default inc-btn" type="button" onclick="addnumber()">+</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="bdbox">
+                    <label class="bdxx"><em>*</em>姓名</label>
+                    <div class="textbox">
+                        <input type="text" name="name" id="name" class="inputText">
+                    </div>
+                </div>
+                <div class="bdbox">
+                    <label class="bdxx"><em>*</em>手機</label>
+                    <div class="textbox">
+                        <input required="required" type="text" name="mob" class="inputText">
+                    </div>
+                </div>
+                <div class="bdbox">
+                    <label class="bdxx" for="emall"><em></em>E-mail</label>
+                    <div class="textbox"><input name="email" placeholder="請填寫常用郵箱方便我們通知您" maxlength="30" class="inputText" type="emall"> </div>
+                </div>
+                <div class="bdbox">
+                    <label class="bdxx"><em style="color: red;font-size: 18px;">*</em>地址：</label>
+                    <div class="textbox" id="province">
+                        <select name="province" style="background: transparent;width:32%;height: 30px;">
+                            <option value="1" selected=""> 台灣</option>
+                        </select>
+                        <select name="city" style="background: transparent;width:32%;height: 30px;">
+                            <option value="0">請選擇</option>
+                            <option value="2">台北市</option><!-- <option value="10039">新北市</option><option value="10040">桃園市</option><option value="10041">台中市</option><option value="10042">台南市</option><option value="10043">高雄市</option><option value="10044">基隆市</option><option value="10045">新竹市</option><option value="10046">嘉義市</option><option value="10047">新竹縣</option><option value="10048">苗栗縣</option><option value="10049">彰化縣</option><option value="10050">南投縣</option><option value="10051">雲林縣</option><option value="10052">嘉義縣</option><option value="10053">屏東縣</option><option value="10054">宜蘭縣</option><option value="10055">花蓮縣</option><option value="10056">台東縣</option><option value="10057">澎湖縣</option><option value="10058">金門縣</option><option value="10059">連江縣</option> -->
+                        </select>
+                    </div>
+                </div>
+                <div class="bdbox">
+                    <label class="bdxx"><em>*</em>詳細地址</label>
+                    <div class="textbox">
+                        <input required="required" type="text" name="address" placeholder="某區+街道門牌信息" class="inputText">
+                        <div style="color:red; margin-top:5px;">請務必將您的地址填寫詳細，否者您的包裹將有可能被退回。</div>
+                    </div>
+                </div>
+                <div class="bdbox">
+                    <label class="bdxx" for="email">特别提醒</label>
+                    <div class="textbox" style="border:1px solid red; padding:5px;">
+                        黑貓以下地區不派送，請知悉喔！<br>
+                        烏坵，太武山，馬公市虎井里，馬公市桶盤里，望安鄉，七美鄉，白沙鄉鳥嶼村，白沙鄉吉貝村，白沙鄉大倉村，白沙鄉員貝村，蘭嶼鄉
+                    </div>
+                </div>
+                <div class="bdbox" id="money">
+                    <label class="bdxx"><em>*</em>金額</label>
+                    <div class="text3box">
+                        <input type="hidden" name="zfbprice" value="2199">
+                        <input name="price" value="2199" readonly="" style="width:80px;">圓  <span id="zfbyh"></span>
+                    </div>
+                </div>
+                <div class="bdbox">
+                    <label class="bdxx"><em>*</em>付款</label>
+                    <div class="dxbox">
+                        <input type="radio" checked="checked" name="pay" id="b1" value="cod" onclick="return changeItem(0);"><label for="b1"><img src="__ROOT__/public/image/hdfk.gif"></label><br>
+                    </div>
+                </div>
+                <script>
+                    $("#gui label").each(function (k, v) {
+                        var price = $(v).find("b").text();
+                        $(v).click(function () {
+                            $("#money input").val();
+                            $("#mun").val(1);
+                            $("#money input").val(price);
+                            $("#pri").attr("alt", price);
+                            //alert(price);
+                        })
+                    })
+                </script>
+                <div class="bdbox">
+                    <label class="bdxx"></label>
+                    <div class="textbox">
+                        <font color="red">
+                            貨到付款+免運 有問題隨時聯繫在線客服 或 發送郵件至此郵箱
+                            <a href="mailto:pleasure@" style="color: #337ab7;"></a>。還可聯繫小編哦！祝您購物愉快!
+                        </font>
+                    </div><font color="red">
+                    </font>
+                </div><font color="red">
+                    <div class="bdbox">
+                        <label class="bdxx">留言</label>
+                        <div class="text2box">
+                            <textarea name="guest" placeholder="如備用聯繫電話"></textarea>
+                        </div>
+                    </div>
+                    <div class="subbox">
+                        <input type="submit"  class="btn-style" id="frm-submit-btns-other" value="提交訂單">
+                    </div>
+
+                    <div style="clear:both;"></div>
+                </font>
+            </form>
+        </div><font color="red">
+
+            <div id="fahuo" style="padding-bottom: 20px;"></div>
+            <!-- <script src="./images/fahuo.js" type="text/javascript"></script>
+             <script type="text/javascript" src="newfiles/not3.js"></script>-->
+            <script>
+                function changeprice() {
+
+                    pricea();
+
+                }
+                function pricea() {
+                    var product = document.form.product.alt;
+                    for (var i = 0; i < document.form.product.length; i++) {
+                        if (document.form.product[i].checked == true) {
+                            var product = document.form.product[i].alt;
+                            break;
+                        }
+                    }
+                    if (document.form.mun.value == "" || document.form.mun.value == 0) {
+                        var mun = 1;
+                    }
+                    else {
+                        var mun = document.form.mun.value;
+                    }
+                    var price = product * mun;
+                    document.getElementById("b1").checked = 'checked';
+                    document.form.price.value = price;
+                    document.form.zfbprice.value = price;
+                    //document.getElementById("showprice").innerHTML=price;
+                    document.getElementById("zfbyh").innerHTML = '';
+                }
+                function addnumber() {
+                    $('#mun').val(parseInt($('#mun').val()) + 1);
+                    changeprice();
+                }
+
+                function minnumber() {
+                    if ($('#mun').val() > 1) {
+                        $('#mun').val(parseInt($('#mun').val()) - 1);
+                        changeprice();
+                    }
+                }
+                function inputnumber() {
+                    var number = parseInt($('#mun').val());
+                    if (isNaN(number) || number < 1) {
+                        $('#mun').val('1');
+                        changeprice();
+                    } else {
+                        $('#mun').val(number);
+                    }
+                    changeprice();
+                }
+
+            </script>
+        </font>
+    </div><font color="red">
+        <div style="display:none;"></div>
+    </font>
+</body>
+</html>
+<script language="javascript">
+    $("#frm-submit-btns-other").click(function () {
+        
+        if (document.form.name.value == "") {
+            layer.tips('請填寫此字段', "input[name='name']", {
+                tips: 3
+            });
+            document.form.name.focus();
+            return false;
+        }
+        
+        var name = /^([a-zA-Z\u4e00-\u9fa5\d]|\d){2,}$/;
+        if (!name.test(document.form.name.value)) {
+            layer.tips('姓名格式不正確', "input[name='name']", {
+                tips: 3
+            });
+            document.form.name.focus();
+            return false;
+        }
+        if (document.form.mob.value == "") {
+            layer.tips('請填寫此字段', "input[name='mob']", {
+                tips: 3
+            });
+            document.form.mob.focus();
+            return false;
+        }
+
+        if (/^09/.test(document.form.mob.value) && !/^\d{10}$/.test(document.form.mob.value)) {
+            layer.tips('手機號碼格式不正確', "input[name='mob']", {
+                tips: 3
+            });
+            document.form.mob.focus();
+            return false;
+        }
+        if (!/^0\d{6,10}/.test(document.form.mob.value)) {
+            layer.tips('手機號碼格式不正確', "input[name='mob']", {
+                tips: 3
+            });
+            document.form.mob.focus();
+            return false;
+        }
+        if (document.form.city.value == "0") {
+            layer.msg('請選擇城市');
+            return false;
+        }
+        if (document.form.address.value == "") {
+            layer.tips('請填寫此字段', "input[name='address']", {
+                tips: 3
+            });
+            document.form.address.focus();
+            return false;
+        }
+        
+        return true;
+    });
+</script>

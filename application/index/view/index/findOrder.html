@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="320" name="MobileOptimized">
+    <meta content="telephone=no" name="format-detection">
+    <title></title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="__PUBLIC__/newfiles/demo1/reset.css">
+    <script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script>
+    <script src="__PUBLIC__/newfiles/jquery.js" language="javascript" type="text/javascript"></script>
+    <script language="javascript" src="__PUBLIC__/Member/inc/jquery.js"></script>
+    <script language="javascript" src="__PUBLIC__/Member/inc/jquery-ui.js"></script>
+    <script language="javascript" src="__PUBLIC__/Member/inc/jquery.form.js"></script>
+    <script language="javascript" src="__PUBLIC__/Member/inc/forwork.js"></script>
+    <script language="javascript" src="__PUBLIC__/Member/inc/jquery-easyui/jquery.easyui.min.js"></script>
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            }; if (!f._fbq) f._fbq = n;
+            n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
+        }(window,
+            document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 143464762948647);
+        fbq('track', "PageView");
+    </script>
+    <!-- Facebook Pixel Code -->
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/newfiles/demo1/inquiry.css">
+    <div class="content">
+        <div class="header"><a class="goback" href="/">返回首頁</a></div>
+        <h2 class="title">訂單查詢</h2>
+        <div class="prompt">請輸入您下單時填寫的手機號碼即可查詢訂單狀態</div>
+        <div class="from flexbox">
+            <input class="inquiry_mob flex" type="text" name="mob" id="mob" placeholder="請輸入手機號碼">
+            <input type="button" name="button" class="btn-style" id="go">
+        </div>
+        <div id="inquiry_list" data_time="訂單時間" data_num="訂單編號" data_sea="查看訂單詳情" data_null="暫時沒有訂單信息">
+
+
+        </div>
+    </div>
+    <img id="loading" src="__PUBLIC__/newfiles/demo1/loading.png">
+</body>
+</html>
+<script language="javascript">
+    $(function () {
+        //ajax提交
+        $("#go").click(function () {
+            var params = $("#mob").val() || "";
+            if (params == "" || params == undefined) { $("#inquiry_list").html(""); }
+            if (params != "" && params!=undefined){
+            $.ajax({
+                type: "POST",
+                url: "/index/index/findOrder",
+                data: {mobile:params,
+                    is_ajax:1},
+                success: function (msg) {
+                    if (msg == "0")
+                    {
+                        var html = "";
+                        html += "<div class=\"item\" style=\" padding:20px 16px 20px 16px; color:#666;\">";
+                        html += "沒有查找到數據";
+                        html += "</div>";
+                        $("#inquiry_list").html(html);
+                    }
+                    else{
+                        $("#inquiry_list").html(msg);
+                    }
+                }
+            });
+            }
+        })
+    });
+</script>

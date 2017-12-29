@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>tpshop管理后台</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="/Public/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="/Public/bootstrap/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 --
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="/Public/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins 
+        folder instead of downloading all of them to reduce the load. -->
+    <link href="/Public/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <!-- iCheck -->
+    <link href="/Public/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />   
+    <!-- jQuery 2.1.4 -->
+    <script src="/Public/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="/Public/js/global.js"></script>
+    <script src="/Public/js/myFormValidate.js"></script>    
+    <script src="/Public/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/Public/js/layer/layer-min.js"></script><!-- 弹窗js 参考文档 http://layer.layui.com/-->
+    <script src="/Public/js/myAjax.js"></script>
+    <script type="text/javascript">
+    function delfunc(obj){
+        layer.confirm('确认删除？', {
+              btn: ['确定','取消'] //按钮
+            }, function(){
+                // 确定
+                $.ajax({
+                    type : 'post',
+                    url : $(obj).attr('data-url'),
+                    data : {act:'del',del_id:$(obj).attr('data-id')},
+                    dataType : 'json',
+                    success : function(data){
+                        if(data==1){
+                            layer.msg('操作成功', {icon: 1});
+                            $(obj).parent().parent().remove();
+                        }else{
+                            layer.msg(data, {icon: 2,time: 2000});
+                        }
+//                          layer.closeAll();
+                    }
+                })
+            }, function(index){
+                layer.close(index);
+                return false;// 取消
+            }
+        );
+    }
+    
+    function selectAll(name,obj){
+        $('input[name*='+name+']').prop('checked', $(obj).checked);
+    }   
+    
+    function get_help(obj){
+        layer.open({
+            type: 2,
+            title: '帮助手册',
+            shadeClose: true,
+            shade: 0.3,
+            area: ['70%', '80%'],
+            content: $(obj).attr('data-url'), 
+        });
+    }
+    </script>        
+  <meta name="__hash__" content="f20c47b3ca5402ba0f5f516c93ecd61f_ffa9464ecfc3aab35e4a4dd65bdbc2a4" /></head>
+  <body style="background-color:#ecf0f5;">
+ 
+
+
+<!--物流配置 css -start-->
+<style>
+    ul.group-list {
+        width: 96%;min-width: 1000px; margin: auto 5px;list-style: disc outside none;
+    }
+    ul.group-list li {
+        white-space: nowrap;float: left;
+        width: 150px; height: 25px;
+        padding: 3px 5px;list-style-type: none;
+        list-style-position: outside;border: 0px;margin: 0px;
+    }
+</style>
+<!--物流配置 css -end-->
+
+<!--以下是在线编辑器 代码 -->
+
+<script type="text/javascript" charset="utf-8" src="/editor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/editor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/editor/lang/zh-cn/zh-cn.js"></script>
+<div class="wrapper"><script type="text/javascript">var editor=UE.getEditor('editor',{initialFrameHeight: 300});</script>
+
+<!--以上是在线编辑器 代码  end-->
+
+    <div class="breadcrumbs" id="breadcrumbs">
+    <ol class="breadcrumb">
+    <li><a href="javascript:void();"><i class="fa fa-home"></i>&nbsp;&nbsp;后台首页</a></li>
+            
+            <li><a href="javascript:void();">商品管理</a></li>    
+            <li><a href="javascript:void();">添加修改商品</a></li>          
+    </ol>
+</div>
+ 
+    <section class="content">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+        
+                <a href="/index.php/Admin/Goods/goodsList/goods_state/1/is_back/1" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+                </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i>商品详情</h3>
+                </div>
+                <div class="panel-body">
+                   
+                    <!--表单数据-->
+                    <form method="post" action="/admin/Goods/addGoods/id/{$goods.id ?? ''}" id="addEditGoodsForm">
+                    <!--通用信息-->
+                    <div class="tab-content">                     
+                        <div class="tab-pane active" id="tab_tongyong">
+                           
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td>商品名称:</td>
+                                    <td>
+                                        <input type="text" value="{$goods.name ?? ''}" name="goods_name" class="form-control" style="width:350px;"/>
+                                        <span id="err_goods_name" style="color:#F00; display:none;"></span>                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>上传商品图片:</td>
+                                    <td>
+                                        
+                                        <input type="text" class="input-sm" name="img" id='goods_img'  value="{$goods.img ?? ''}" style="width: 300px;" />
+                                        <input type="file" style="width: 75px;display: inline-block;" id="img"  onchange="upload('img','goods_img')" >
+                                        <span><img style="width:50px;height:50px;display: {$goods.img?'':'none'}" src="{$goods.img ?? ''}"></span>
+                                        <span id="err_original_img" style="color:#F00; display:none;"></span>                                                           
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>价格：</td>
+                                    <td>                                                                               
+                                        <input type="text" value="{$goods.price ?? ''}" name="price" class="form-control" style="width:350px;"/>
+                                        <span id="err_goods_sn" style="color:#F00; display:none;"></span>
+                                    </td>
+                                </tr>
+                                <tr hidden>
+                                    <td>SKU：</td>
+                                    <td>                                                                               
+                                        <input type="text" value="{$goods.sku ?? ''}" name="sku" class="form-control" style="width:350px;"/>
+                                        <span id="err_goods_spu" style="color:#F00; display:none;"></span>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td>网站：</td>
+                                    <td>                                                                               
+                                        <input type="text" placeholder="二级域名" value="{$goods.c_web ?? ''}" name="c_web" class="form-control" style="width:350px;"/> <input type="text" placeholder="无前缀域名" value="{$goods.web ?? ''}" name="web" class="form-control" style="width:350px;"/>
+                                        <span id="err_goods_sku" style="color:#F00; display:none;"></span>
+                                    </td>
+                                </tr>                                
+                                <tr>
+                                    <td>销售模式：</td>
+                                    <td>
+                                      <div class="col-xs-3">
+                                      <select name="tmps" id="cat_id1"  class="form-control" style="width:250px;margin-left:-15px;">
+                                         
+                                      {volist name="tmps" id="vo"}
+                                       
+                                        <option  {eq name="vo.name" value="!empty($goods.tmp?$goods.tmp"}selected="selected"{/eq} value="{$vo.name}" >{$vo.title} {$vo.name}</option> 
+
+                                        {/volist}       
+                                        </select>
+                                      </div>
+                                         
+                                     
+                                    </td>
+                                </tr>                                 
+                                <!-- <tr hidden>
+                                    <td>本店分类:</td>
+                                    <td>
+                                      <div class="col-xs-3">
+                                      <select name="store_cat_id1" id="store_cat_id1" onchange="get_store_category(this.value,'store_cat_id2','0');" class="form-control" style="width:250px;margin-left:-15px;">
+                                        <option value="0">请选择分类</option>
+                                      </div>
+                                      <div class="col-xs-3">
+                                      <select name="store_cat_id2" id="store_cat_id2" class="form-control" style="width:250px;margin-left:-15px;">
+                                        <option value="0">请选择分类</option>
+                                      </select>  
+                                      </div>                                     
+                                      <span id="err_cat_id" style="color:#F00; display:none;"></span>                                 
+                                    </td>
+                                </tr>     -->                                                            
+                               
+                                <tr>
+                                    <td>facebook像素:</td>
+                                    <td>
+                                        <input type="text" value="{$goods.px ?? ''}" name="facebook" class="form-control" style="width:150px;"  />
+                                        <span id="err_shop_price" style="color:#F00; display:none;"></span>                                                         
+                                    </td>
+                                </tr>  
+                                <tr>
+                                    <td>供应商:</td>
+                                    <td>
+                                        <input type="text" value="{$goods.supplier ?? ''}" name="supplier" class="form-control" style="width:150px;" />
+                                        <span id="err_market_price" style="color:#F00; display:none;"></span>                                                           
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td>SKU:</td>
+                                    <td>
+                                        <input type="text" value="{$goods.sku ?? ''}" name="sku" class="form-control" style="width:150px;" />
+                                        <span id="err_market_price" style="color:#F00; display:none;"></span>                                                           
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td>赠品供应商:</td>
+                                    <td>
+                                        <input type="text" value="{$goods.gift_supplier ?? ''}" name="gift_supplier" class="form-control" style="width:150px;" />
+                                        <span id="err_cost_price" style="color:#F00; display:none"></span>                                                          
+                                    </td>
+                                </tr>       
+                                <tr>
+                                    <td>商品尺寸:</td>
+                                    <td>
+                                    <span class="goodsdiv">
+                                    {if condition="!empty($goods.size)"}
+                                    {volist name="$goods.size" id="vo"}
+                                        <label>
+                                            <input type="text" value="{$vo}" name="goods_size[]" placeholder="M" class="form-control" style="width:70px;"  />
+                                            <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">
+                                        </label>
+                                    {/volist}
+                                    {else /}
+
+                                        <label>
+                                            <input type="text" value="M" name="goods_size[]" placeholder="M" class="form-control" style="width:70px;"  />
+                                            <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">
+                                        </label>
+                                    {/if}
+                                    </span>
+                                        <input type="button"  class="btn btn-success" onclick="add($('.goodsdiv'))" value="+">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>商品颜色:</td>
+                                    <td>
+                                    <span style="display: inline-block;line-height: 40px;">
+                                        <span style="width:40px;height: 40px;display: inline-block;line-height: 40px;text-align: center;"><input type="button" class="btn btn-success" onclick="addG($('.c_span'))" value="+" style="width:40px"></span>
+                                        <span style="width:90px;height: 40px;display: inline-block;line-height: 40px;text-align: center;">颜色</span>
+                                        <span style="width:160px;height: 40px;display: inline-block;line-height: 40px;text-align: center;">颜色图片</span>
+                                        <span style="width:90px;height: 40px;display: inline-block;line-height: 40px;text-align: center;">上传图片</span>
+                                    </span><br>
+                                    <span attr='d' class="c_span">
+                                    {if condition="!empty($goods.color)"}
+                                    {volist name="$goods.color" id="vo"}
+                                        <lable>
+                                            <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">
+                                            <input type="text" placeholder="颜色" value="{$vo.color}" name="goods_color[]" class="form-control" style="width:90px;"  />
+                                            <input type="text" id="color_img_{$i}" name="color_img[]" value="{$vo.img}">
+                                            
+                                            <input type="file" onchange="upload('img{$i}','color_img_{$i}')" id="img{$i}" style="display:inline-block;width: 75px;">
+                                            <span><img style="width:50px;height:50px;" src="{$vo.img}"></span>
+                                        
+                                        <br><br></lable>
+                                    {/volist}
+                                    {else /}
+
+                                        <lable>
+                                            <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">
+                                            <input type="text" placeholder="颜色" value="" name="goods_color[]" class="form-control" style="width:90px;"  />
+                                            <input type="text" id="color_img_1" name="color_img[]">
+                                            
+                                            <input type="file" onchange="upload('img1','color_img_1')" id="img1" style="display:inline-block;width: 75px;">
+                                            <span><img style="width:50px;height:50px;display: none" src=""></span>
+                                        
+                                        <br><br></lable>
+                                    {/if}
+                                    </span>
+                                    
+
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>赠品尺寸:</td>
+                                    <td>
+                                    <span class="giftdiv">
+                                    {if condition="!empty($goods.size)"}
+                                    {volist name="$goods.size" id="vo"}
+                                        <label>
+                                            <input type="text" value="{$vo}" name="gift_size[]" placeholder="M" class="form-control" style="width:70px;"  />
+                                            <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-"> 
+                                        </label>
+                                    {/volist}
+                                    {else /}
+
+                                        <label>
+                                            <input type="text" value="M" name="gift_size[]" placeholder="M" class="form-control" style="width:70px;"  />
+                                            <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-"> 
+                                        </label>
+                                    {/if}
+                                    </span>
+                                        <input type="button"  class="btn btn-success" onclick="add($('.giftdiv'),'gift')" value="+">
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>赠品颜色:</td>
+                                    <td>
+                                    <span style="display: inline-block;line-height: 40px;">
+                                        <span style="width:40px;height: 40px;display: inline-block;line-height: 40px;text-align: center;"><input type="button" class="btn btn-success" onclick="addG($('.g_span'),'gift')" value="+" style="width:40px"></span>
+                                        <span style="width:90px;height: 40px;display: inline-block;line-height: 40px;text-align: center;">颜色</span>
+                                        <span style="width:160px;height: 40px;display: inline-block;line-height: 40px;text-align: center;">颜色图片</span>
+                                        <span style="width:90px;height: 40px;display: inline-block;line-height: 40px;text-align: center;">上传图片</span>
+                                    </span><br>
+                                    <span attr='g' class="g_span">
+                                    {if condition="!empty($goods.gift_color)"}
+                                    {volist name="$goods.gift_color" id="vo"}
+                                        <lable>
+                                            <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">
+                                            <input type="text" placeholder="颜色" value="{$vo.color}" name="gift_color[]" class="form-control" style="width:90px;"  />
+                                            <input type="text" id="color_gift_{$i}" name="gift_img[]" value="{$vo.img}">
+                                            
+                                            <input type="file" onchange="upload('gift{$i}','color_gift_{$i}')" id="gift{$i}" style="display:inline-block;width: 75px;">
+                                            <span><img style="width:50px;height:50px;" src="{$vo.img}"></span>
+                                        
+                                        <br><br></lable>
+                                    {/volist}
+                                    {else /}
+                                        <lable>
+                                            <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">
+                                            <input type="text" placeholder="颜色" value="" name="gift_color[]" class="form-control" style="width:90px;"  />
+                                            <input type="text" id="color_gift_1" name="gift_img[]">
+                                            
+                                            <input type="file" onchange="upload('gift1','color_gift_1')" id="gift1" style="display:inline-block;width: 75px;">
+                                            <span><img style="width:50px;height:50px;display: none" src=""></span>
+                                        
+                                        <br><br></lable>
+                                    {/if}
+                                    </span>
+                                    
+
+                                    
+                                    </td>
+                                </tr>
+                                <tr><td>商品详情页</td><td>
+                                    <script id="editor" type="text/plain" style="max-width: 700px;">{$goods.content ?? ''}</script></td>
+                                </tr>
+                                
+                                </tbody>                                
+                                </table>
+                                <div><input type="button" value="确定" class="btn btn-success" style="float:right;margin-right: 20px; " onclick="submit()"> </div>
+                        </div>
+                         <!--其他信息-->
+                         
+                       
+                    </form><!--表单数据-->
+                </div>
+            </div>
+        </div>    <!-- /.content -->
+    </section>
+</div>
+
+
+
+
+<script>
+
+    $(document).ready(function(){
+        $(":checkbox[cka]").click(function(){
+            var $cks = $(":checkbox[ck='"+$(this).attr("cka")+"']");
+            if($(this).is(':checked')){
+                $cks.each(function(){$(this).prop("checked",true);});
+            }else{
+                $cks.each(function(){$(this).removeAttr('checked');});
+            }
+        });
+    });
+    function submit(){
+        $('form').submit();return ;
+        $.ajax({
+            url:"/admin/Goods/addGoods",
+            type:'POST',
+            data:$('form').serialize(),
+            success:function(res){
+                if(res.code=='1'){
+                    alert('保存成功')
+                }else{
+                    alert(res.msg)
+                }
+            }
+        })
+    }
+    //ajax上传文件
+    function upload(id,dd){
+        $("#imgWait").show();
+        var formData = new FormData();
+        formData.append(id+"_file", document.getElementById(id).files[0]);   
+        $.ajax({
+            url: "/admin/uploadify/upload/id/"+id+"_file",
+            type: "POST",
+            data: formData,
+            /**
+            *必须false才会自动加上正确的Content-Type
+            */
+            contentType: false,
+            /**
+            * 必须false才会避开jQuery对 formdata 的默认处理
+            * XMLHttpRequest会对 formdata 进行正确的处理
+            */
+            processData: false,
+            success: function (data) {
+                if (data.code == "1") {
+                    document.getElementById(dd).value=data.filename;
+                    $('#'+dd).parent().find('img').show().attr("src",data.filename);
+                }
+                if (data.code == "0") {
+                    alert(data.msg);
+                }
+                $("#imgWait").hide();
+            },
+            error: function () {
+                alert("上传失败！");
+                $("#imgWait").hide();
+            }
+        });
+    }
+    //删除自身
+    function del(obj){
+        obj.parent().remove();
+    } 
+    //增加尺寸html
+    function add(obj,name){
+        if(name=='gift'){
+            var html='<label>\
+                <input type="text" value="" name="gift_size[]" placeholder="M" class="form-control" style="width:70px;"  />\
+                <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">\
+                </label>';
+        }else{
+        var html='<label>\
+            <input type="text" value=""  placeholder="M" name="goods_size[]" class="form-control" style="width:70px;"  />\
+            <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">\
+            </label>';
+        }
+
+        obj.append(html);
+    }
+    //增加颜色html
+    function addG(obj,goods){
+        var attr=obj.attr('attr');
+        if(goods){
+            var html = '<lable>\
+            <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">\
+                <input type="text" placeholder="颜色" value="" name="gift_color[]" class="form-control" style="width:90px;"  />\
+                <input type="text" id="color_gift_'+attr+'" name="gift_img[]">\
+                <input type="file" onchange="upload(\'gift'+attr+'\',\'color_gift_'+attr+'\')" id="gift'+attr+'" style="display:inline-block;width: 75px;">\
+                <span><img style="width:50px;height:50px;display: none" src=""></span>\
+            <br><br></lable>';
+        }else{
+             var html='<lable>\
+             <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">\
+                <input type="text" placeholder="颜色" value="" name="goods_color[]" class="form-control" style="width:90px;"  />\
+                <input type="text" id="color_img_'+attr+'" name="color_img[]">\
+                <input type="file" onchange="upload(\'img'+attr+'\',\'color_img_'+attr+'\')" id="img'+attr+'" style="display:inline-block;width: 75px;">\
+                <span><img style="width:50px;height:50px;display: none" src=""></span>\
+            <br><br></lable>';
+        }
+       
+        obj.append(html);
+        obj.attr('attr',attr+1);
+    }
+    
+
+</script>
+
+</body>
+</html>
