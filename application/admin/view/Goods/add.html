@@ -172,7 +172,7 @@
                                          
                                       {volist name="tmps" id="vo"}
                                        
-                                        <option  {eq name="vo.name" value="!empty($goods.tmp?$goods.tmp"}selected="selected"{/eq} value="{$vo.name}" >{$vo.title} {$vo.name}</option> 
+                                        <option  {eq name="vo.name" value="!empty($goods.tmp?$goods.tmp"}selected="selected"{/eq} value="{$vo.id}" >{$vo.title} {$vo.name}</option> 
 
                                         {/volist}       
                                         </select>
@@ -238,10 +238,10 @@
                                     {/volist}
                                     {else /}
 
-                                        <label>
+                                        <!-- <label>
                                             <input type="text" value="M" name="goods_size[]" placeholder="M" class="form-control" style="width:70px;"  />
                                             <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">
-                                        </label>
+                                        </label> -->
                                     {/if}
                                     </span>
                                         <input type="button"  class="btn btn-success" onclick="add($('.goodsdiv'))" value="+">
@@ -271,7 +271,7 @@
                                     {/volist}
                                     {else /}
 
-                                        <lable>
+                                        <!-- <lable>
                                             <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">
                                             <input type="text" placeholder="颜色" value="" name="goods_color[]" class="form-control" style="width:90px;"  />
                                             <input type="text" id="color_img_1" name="color_img[]">
@@ -279,7 +279,7 @@
                                             <input type="file" onchange="upload('img1','color_img_1')" id="img1" style="display:inline-block;width: 75px;">
                                             <span><img style="width:50px;height:50px;display: none" src=""></span>
                                         
-                                        <br><br></lable>
+                                        <br><br></lable> -->
                                     {/if}
                                     </span>
                                     
@@ -300,10 +300,10 @@
                                     {/volist}
                                     {else /}
 
-                                        <label>
+                                        <!-- <label>
                                             <input type="text" value="M" name="gift_size[]" placeholder="M" class="form-control" style="width:70px;"  />
                                             <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-"> 
-                                        </label>
+                                        </label> -->
                                     {/if}
                                     </span>
                                         <input type="button"  class="btn btn-success" onclick="add($('.giftdiv'),'gift')" value="+">
@@ -333,7 +333,7 @@
                                         <br><br></lable>
                                     {/volist}
                                     {else /}
-                                        <lable>
+                                        <!-- <lable>
                                             <input type="button" class="btn btn-danger" onclick="del($(this))" style="width: 20px;height:20px;padding: 0px;font-size: 20px;line-height: 20px;" value="-">
                                             <input type="text" placeholder="颜色" value="" name="gift_color[]" class="form-control" style="width:90px;"  />
                                             <input type="text" id="color_gift_1" name="gift_img[]">
@@ -341,7 +341,7 @@
                                             <input type="file" onchange="upload('gift1','color_gift_1')" id="gift1" style="display:inline-block;width: 75px;">
                                             <span><img style="width:50px;height:50px;display: none" src=""></span>
                                         
-                                        <br><br></lable>
+                                        <br><br></lable> -->
                                     {/if}
                                     </span>
                                     

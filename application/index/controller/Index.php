@@ -2,6 +2,7 @@
 namespace app\index\controller;
 use \think\Controller;
 use \app\common\logic\OrdersLogic;
+use \think\Db;
 
 class Index extends Controller
 {
@@ -17,8 +18,9 @@ class Index extends Controller
         $domain = getDomain();
         $row = getGoods($domain);
         $this->assign('good',$row);
-        $tmp=$row['tmp'];
-        $tmp = basename($tmp,".html");
+        $tmp_id=$row['tmp'];
+        $tmp_info=getTmp($tmp_id);
+        $tmp=$tmp_info['name'];
         return $this->fetch($tmp);
     }
 
@@ -32,7 +34,8 @@ class Index extends Controller
         $this->assign('color',$info['color']);
         $this->assign('gift_size',$info['gift_size']);
         $this->assign('gift_color',$info['gift_color']);
-        return $this->fetch();
+        $tmp_info=getTmp($info['tmp']);
+        return $this->fetch($tmp_info['order_name']);
     }
 
     //提交添加订单

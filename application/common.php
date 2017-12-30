@@ -39,3 +39,8 @@ function getArea($id){
     $info= Db::name('area')->where('id',$id)->find();
     return $info['name'];
 }
+
+//返回模板数组
+function getTmp($id){
+    return Db::name('tmps')->where('id',$id)->find();
+}

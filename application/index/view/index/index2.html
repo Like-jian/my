@@ -33,6 +33,47 @@
         <img height="1" width="1" src="https://www.facebook.com/tr?id={$good.px}&ev=PageView&noscript=1" />
     </noscript>
     <!-- End Facebook Pixel Code -->
+    <style type="text/css">
+        .flagicon {
+            background: url(./public/image/clock.png);
+            margin-top: -2px;
+        }
+        
+        .icon {
+            background-size: 16px;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .righticon {
+            background: url(./public/image/right.png);
+            float: right;
+            margin-top: 9px;
+        }
+        .sizeicon {
+            background: url(./public/image/in.png);
+        }
+        li.top:after {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-top: 2px solid #ccc;
+            border-right: 2px solid #ccc;
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+            text-align: center;
+            margin: 14px 0 0 14px;
+        }
+        .nav-list .buy_now {
+            background: #ef3f52;
+            height: 40px;
+            margin-bottom: 5px;
+            flex: 1;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <!-- resource -->
@@ -42,8 +83,8 @@
     <link href="__PUBLIC__/template/demo/style7.css" rel="stylesheet" type="text/css" />
     <!--  -->
     
-     <div class="mod_slider" id="loopImgDiv" style="padding:0;">
-        <div class="inner">
+     <div class="mod_slider" id="loopImgDiv" style="padding:0;" >
+        <div class="inner" id="gotop">
             <div class="swiper-container swiper-container-horizontal swiper-container-autoheight">
                 <div class="swiper-wrapper" style="height: auto; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
                     <div class="swiper-slide swiper-slide-active" style="width: 100%;"><img width="100%" src="{$good.img}"></div>
@@ -53,47 +94,47 @@
         </div>
     </div>
     <div class="inforContent">
-        <div class="i-p-m buyinfo_post" style="position: relative;padding:5px 0;background: #ef3f52">
-            <span class="flag1">
+        <div class="i-p-m buyinfo_post" style="position: relative;padding:5px 0;background: #ef3f52;">
+            <span class="flag1" style="float: left;margin-left: 30px;color: #ff0;">
                 <i class="icon flagicon"></i>
                 <span style="margin-top: 7px">限時搶購</span>
             </span>
-            <span class="timeWrap">
+            <span class="timeWrap" style="color: #fff;">
                 距結束
                 <span id="timer"><span id="h">08</span><span class="colon">時</span><span id="m">00</span><span class="colon">分</span><span id="s">00</span><span class="colon">秒</span></span>
             </span>
         </div>
-        <div class="i-p-top">
-            <span class="acticePrice">
+        <div class="i-p-top" style="padding-left: 16px;padding-top: 10px;">
+            <span class="acticePrice" style="font-size: 25px;">
                 <span></span>
                 NT${$good.price}
             </span>
-            <span class="oldPrice">
+            <span class="oldPrice" style="font-size: 14px;">
                 <span>NT${$good['discount']!=0?$good['price']/$good['discount']:$good['price']}</span>
             </span>
-            <span class="daze">{$good['discount']*10}折</span>
+            <span class="daze" style="font-size: 14px;background: black;border-radius: 3px;color: #fff;">{$good['discount']*10}折</span>
         </div>
-        <div class="explain_top">{$good.name}</div>
+        <div class="explain_top" style="padding-left: 16px;font-size: 16px;padding-top: 10px;padding-bottom: 15px;">{$good.name}</div>
         <div id="here"></div>
     </div>
-    <div class="explain">
+    <div class="explain" style="padding-left: 16px;">
         <ul>
-            <li>【爆款特賣】【免運費】【貨到付款】</li>
+            <li style="color: red;padding-bottom: 15px;">【爆款特賣】【免運費】【貨到付款】</li>
         </ul>
     </div>
-    <div class="size_box">
-        <div class="buy_size" onclick="diaoz()">
+    <div class="size_box" style="margin: 0 10px;padding:0 6px;border-bottom: #e5e5e5 solid 1px;">
+        <div class="buy_size" onclick="diaoz()" style="height: 35px;margin-bottom: 7px;background: #eee;line-height: 35px;padding-left: 10px;">
             <i class="icon sizeicon"></i>
             <span style="color: #555">選擇&nbsp;&nbsp;顏色/尺碼</span>
             <i class="icon righticon"></i>
         </div>
-        <div class="inquiry" onclick="inquiry()">
+        <div class="inquiry" onclick="inquiry()" style="height: 35px;margin-bottom: 7px;background: #eee;line-height: 35px;padding-left: 10px;">
             <span style="color: #555">查詢訂單</span>
             <i class="icon righticon"></i>
         </div>
     </div>
-    <div class="bTop">
-        <span class="bTitle bTitle1" style="border: 0px; width: 100%; text-align: center;">圖文詳情</span>
+    <div class="" >
+        <span class="bTitle bTitle1" style="border: 0px; width: 100%; text-align: center;color: #333;border-bottom: 1px solid #e5e5e5; ">圖文詳情</span>
         <a class="pinlun" href="http://www.immrutal.com/#pinlun_content" style="display: none;">買家評價</a>
     </div>
         <div class="detail_info_wrap">
@@ -112,14 +153,14 @@
                     </div>
                 </div>
 
-                <div class="fixednav">
-                    <ul class="nav-list">
-                        <li>
-                            <a href="/index/index/findOrder" class="inquiry"><span>查詢訂單</span></a>
+                <div class="fixednav" style="padding-bottom: 5px;">
+                    <ul class="nav-list" style="display: flex;padding: 5px;">
+                        <li class="top" onclick="window.location.href='#gotop'" style="border: 1px solid #ccc;width: 40px;height: 38px;    text-align: center;background: #fff;margin-right: 5px;">
+                            
                         </li>
-                        <li id="btn_buy">
-                            <a href="/index/index/order/id/{$good.id}" class="conbtn">
-                                <span>index2</span>
+                        <li id="btn_buy" style="background: #ef3f52;height: 40px;margin-bottom: 5px;flex: 1;text-align: center;">
+                            <a style="display: block;height: 40px;line-height: 40px;" href="/index/index/order/id/{$good.id}" class="conbtn">
+                                <span>立即下標</span>
                             </a>
                         </li>
                     </ul>
