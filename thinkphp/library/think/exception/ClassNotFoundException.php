@@ -1,7 +1,6 @@
-#!/usr/bin/env php
 <?php
 // +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
+// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
@@ -10,9 +9,24 @@
 // | Author: yunwuxin <448901948@qq.com>
 // +----------------------------------------------------------------------
 
-// 定义项目路径
-define('APP_PATH', __DIR__ . '/application/');
+namespace think\exception;
 
+class ClassNotFoundException extends \RuntimeException
+{
+    protected $class;
+    public function __construct($message, $class = '')
+    {
+        $this->message = $message;
+        $this->class   = $class;
+    }
 
-// 加载框架引导文件
-require __DIR__.'/thinkphp/console.php';
+    /**
+     * 获取类名
+     * @access public
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+}
